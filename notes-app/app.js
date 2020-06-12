@@ -17,6 +17,11 @@ try {
     fileSystem.readFile(fileNamesample, codingString, (err, data) => {
         if (err) throw err;
         console.log(data);
+        fileSystem.appendFileSync(nameFile, data);
+        fileSystem.readFile(nameFile, codingString, (err, data2) => {
+            if (err) throw err;
+            console.log(data2);
+        })
     })
 } catch (error) {
     console.log(error);
