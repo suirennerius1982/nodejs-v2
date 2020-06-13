@@ -1,31 +1,13 @@
-const fileSystem = require('fs')
-const { setMaxListeners } = require('process')
-const nameFile = 'notes.txt'
-const codingString = 'utf8'
-const fileNamesample = 'sample.txt'
-try {
-    if (!fileSystem.existsSync(nameFile)) {
-        fileSystem.writeFileSync(nameFile, 'My name is Nerius')
-        fileSystem.appendFileSync(nameFile, 'Perez Toirac ', codingString)
-        fileSystem.appendFileSync(nameFile, 'is begining deveop in node js, ', codingString)
-        fileSystem.appendFileSync(nameFile, ' it\svery interthing', codingString)
+const chalk = require('chalk')
+const validator = require('validator')
+const add = require('./utils.js')
+const getNotes = require('./note.js')
 
-    }
+console.log('this is app.js that call to utils.js')
+//console.log(name)
+console.log(add(7, 7))
+console.log(getNotes())
 
-} catch (error) {
-    console.log(error)
-}
-
-try {
-    fileSystem.readFile(fileNamesample, codingString, (err, data) => {
-        if (err) throw err;
-        console.log(data);
-        fileSystem.appendFileSync(nameFile, data);
-        fileSystem.readFile(nameFile, codingString, (err, data2) => {
-            if (err) throw err;
-            console.log(data2);
-        })
-    })
-} catch (error) {
-    console.log(error);
-} 
+console.log(validator.isEmail('nerius@gmail.example.com'))
+console.log(validator.isURL('hteodofof'))
+console.log(chalk.green('SUCCESS'), chalk.underline.bold.blue('hello'), chalk.inverse.yellow('It\'s yellow'))
