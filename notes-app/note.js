@@ -7,7 +7,7 @@ const chalk = require('chalk')
 const nameFile = 'notes.txt'
 const codingString = 'utf8'
 
-const getNotes = function () {
+const getNotes = () => {
     return 'Your notes';
     /* yn = fileSystem.readFile(nameFile, codingString, (err, data2) => {
         if (err) throw err;
@@ -18,13 +18,10 @@ const getNotes = function () {
     })  */
 }
 
-const addNote= function (title, body) {
+const addNote = (title, body) => {
     const notes = loadNotes()
-    const duplicateNotes = notes.filter(function(note){
-        return note.title === title
-    })
+    const duplicateNotes = notes.filter(note => note.title === title)
     if (duplicateNotes.length === 0){
-        console.log('here')
         notes.push({
             title: title,
             body: body
@@ -36,12 +33,12 @@ const addNote= function (title, body) {
     } 
 }
 
-const saveNotes = function(notes){
+const saveNotes = (notes) => {
     const dataJson = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJson)
 }
 
-const removeNote = function(title) {
+const removeNote = (title) => {
     const notes = loadNotes()
     const newArray = notes.filter(note => note.title !== title)
     if (notes.length > newArray.length) {
@@ -52,7 +49,7 @@ const removeNote = function(title) {
     }
 }
 
-const loadNotes = function (){
+const loadNotes = () => {
     try {
         const dataBuffer = fs.readFileSync('notes.json')
         const dataJSON = dataBuffer.toString()
