@@ -6,7 +6,7 @@ const getNotes = require('./note.js')
 console.log('this is app.js that call to utils.js')
 //console.log(name)
 console.log(add(7, 7))
-console.log(getNotes())
+//console.log(getNotes())
 
 console.log(validator.isEmail('nerius@gmail.example.com'))
 console.log(validator.isURL('hteodofof'))

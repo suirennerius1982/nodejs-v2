@@ -1,7 +1,9 @@
 const chalk = require('chalk')
 const validator = require('validator')
-const getNotes = require('./note.js')
+const notes = require('./note.js')
 const yargs = require('yargs')
+const { NOTFOUND } = require('dns')
+const { arch, argv } = require('process')
 
 //console.log(process.argv)
 //Customize yargs version
@@ -25,8 +27,7 @@ yargs.command({
         }
     },
     handler: function (argv) {
-        console.log('Adding a new note!!! ' + argv.title)
-        console.log('The body operator is: ' + argv.body)
+        notes.addNote(argv.title, argv.body)
     }
 })
 
@@ -34,8 +35,16 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
-    handler: function () {
-        console.log('Removing the note')
+    builder: {
+        title: {
+            describe: 'Title that has removide',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        console.log('Removing the note: ' + argv.title)
+        notes.removeNote(argv.title)
     }
 })
 
