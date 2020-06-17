@@ -52,7 +52,7 @@ yargs.command({
     command: 'list',
     describe: 'List a sets of elements',
     handler() {
-        console.log('Listing a set of elements')
+        notes.listNotes()
     }
 })
 
@@ -60,8 +60,15 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'Read element to the console',
-    handler() {
-        console.log('Reading element to the consoles')
+    builder: {
+        title: {
+            describe: 'The title of the note that you need read',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+        notes.readNote(argv.title)
     }
 })
 
