@@ -53,6 +53,24 @@ app.get('/weather', (req, res) => {
     })
 })
 
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        author: 'Nerius Pérez',
+        notFoundMessage: 'Page subarticle to help not exist'
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        notFoundMessage: 'Resource not found',
+        title: '404',
+        author: 'Nerius Pérez'
+    })   
+})
+
+
+
 //http://app.com
 //http://app.com/help
 //http://app.com/about
