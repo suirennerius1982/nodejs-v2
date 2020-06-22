@@ -40,3 +40,10 @@ const trasaction = (type, {label, colorProduct, price, stock}) => {
 }
 
 trasaction('order', product)
+
+const trasaction2 = (type, {label, colorProduct, price, stock = 0} = {}) => {
+    //console.log(`It\s the case of pass parame: ${type}-${label}-${colorProduct}-${price}-${stock}`)
+    console.log(type, label, colorProduct, price, stock)
+}
+
+trasaction2('order2', product)

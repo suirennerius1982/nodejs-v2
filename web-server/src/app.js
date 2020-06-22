@@ -46,7 +46,6 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    debugger
     const errorGeneric = {
         error: 'Ocurred an error'
     }
@@ -55,16 +54,21 @@ app.get('/weather', (req, res) => {
             error: 'Not provider Address param'
         })
     } else if (req.query.address) {
-        geocode(req.query.address, (error, { latitude = 'latitude', longitude = 'longitude' } = {}) => {
+        geocode(req.query.address, (error, { latitude, longitude } = {}) => {
             if (error) {
                 console.log(error)
-                return errorGeneric.error = errorGeneric + error
+                errorGeneric.error = error
+                return res.send({
+                    error: error   
+                })
             } else {
                 forecast(latitude, longitude, (errorForesCast, weatherObject) => {
                     const { weather, country, locality, temperature, windChillFactor } = weatherObject
                     if (errorForesCast) {
                         console.log(errorForesCast)
-                        return errorGeneric.error = errorGeneric + error
+                        return res.send({
+                            error: errorForesCast
+                        })
                     } else {
                          console.log(`Part weather in ${req.query.address} is ${weather}, in country ${country} 
                                      locality ${locality}. The temperature is: ${temperature} and the 
