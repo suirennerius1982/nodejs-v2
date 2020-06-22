@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 const app = express()
 /* console.log(__dirname)
@@ -44,13 +46,37 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    res.send({
-        weather: 'Partly cloudy',
-        country: 'Cuba',
-        locality: 'La Veguita',
-        temperature: 31,
-        windChillFactor: 39
-    })
+    debugger
+    const errorGeneric = {
+        error: 'Ocurred an error'
+    }
+    if(!req.query.address) {
+        return res.send({
+            error: 'Not provider Address param'
+        })
+    } else if (req.query.address) {
+        geocode(req.query.address, (error, { latitude = 'latitude', longitude = 'longitude' } = {}) => {
+            if (error) {
+                console.log(error)
+                return errorGeneric.error = errorGeneric + error
+            } else {
+                forecast(latitude, longitude, (errorForesCast, weatherObject) => {
+                    const { weather, country, locality, temperature, windChillFactor } = weatherObject
+                    if (errorForesCast) {
+                        console.log(errorForesCast)
+                        return errorGeneric.error = errorGeneric + error
+                    } else {
+                         console.log(`Part weather in ${req.query.address} is ${weather}, in country ${country} 
+                                     locality ${locality}. The temperature is: ${temperature} and the 
+                                     windChillFactor ${windChillFactor}`) 
+                        res.send(
+                            weatherObject
+                        )
+                    }
+                })
+            }
+        })
+    }
 })
 
 app.get('/help/*', (req, res) => {
