@@ -56,11 +56,7 @@ app.get('/weather', (req, res) => {
     } else if (req.query.address) {
         geocode(req.query.address, (error, { latitude, longitude } = {}) => {
             if (error) {
-                console.log(error)
-                errorGeneric.error = error
-                return res.send({
-                    error: error   
-                })
+                return res.send(error)
             } else {
                 forecast(latitude, longitude, (errorForesCast, weatherObject) => {
                     const { weather, country, locality, temperature, windChillFactor } = weatherObject
